@@ -27,15 +27,15 @@ def get_weather_json(zip):
 	return weather_json
 
 def get_temperature(json_data):
-	temp = json_data['current_observation']['feelslike_f']
+	temp = json_data['data']['current_condition'][0]['temp_F']
 	return temp
 
 def get_forcast(json_data):
-	forcast = json.data['current_observation']['weather']
+	forcast = json.data['data']['current_condition'][0]['weatherCode']
 	return forcast
 
 def get_windspeed(json_data):
-	wind - json_data['current_observation']['wind_mph']
+	wind - json_data['data']['current_condition'][0]['windspeedMiles']
 	return str(wind)
 
 
@@ -49,4 +49,3 @@ print(weather_json)
 
 # print (get_temperature(weather_json))
 
-# Sometimes it says the Key does not exist! This cam be a problem
