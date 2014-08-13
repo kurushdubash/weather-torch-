@@ -20,8 +20,8 @@ def get_zip_code():
 		zip_code = input()
 	return str(zip_code)
 
-def get_weather_json(zip):
-	weather_url = 'http://api.worldweatheronline.com/free/v1/weather.ashx?q=' + str(zip) + '&format=json&num_of_days=1&key=' + str(api)
+def get_weather_json(zip_code):
+	weather_url = 'http://api.worldweatheronline.com/free/v1/weather.ashx?q=' + str(zip_code) + '&format=json&num_of_days=1&key=' + str(api)
 	weather_data = requests.get(weather_url)
 	weather_json = weather_data.json()
 	return weather_json
@@ -40,12 +40,9 @@ def get_windspeed(json_data):
 
 
 zip_code_input = get_zip_code()
-weather_json = get_weather_json(zip)
+weather_json = get_weather_json(zip_code_input)
 
-print(weather_json)
+temp = get_temperature(weather_json)
 
-# temperature = get_temperature(weather_json)
-# wind = get_windspeed(weather_json)
-
-# print (get_temperature(weather_json))
+print(temp)
 
