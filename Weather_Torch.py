@@ -18,10 +18,10 @@ def get_zip_code():
 		print('Invalid Zip Code')
 		print('Please enter your zip code:')
 		zip_code = input()
-	return zip_code
+	return str(zip_code)
 
 def get_weather_json(zip):
-	weather_url = 'http://www.api.worldweatheronline.com/free/v1/weather.ashx?q=' + str(zip) + '&format=json&num_of_days=5&key=' + api
+	weather_url = 'http://api.worldweatheronline.com/free/v1/weather.ashx?q=' + str(zip) + '&format=json&num_of_days=1&key=' + str(api)
 	weather_data = requests.get(weather_url)
 	weather_json = weather_data.json()
 	return weather_json
