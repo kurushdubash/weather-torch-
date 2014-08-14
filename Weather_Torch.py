@@ -2,7 +2,6 @@ import requests
 import time
 
 api = '2ffd40362f6c4bdd050c1ad48eaa7891cb1e4890'
-ferinheight = True
 
 def get_zip_code():
 	print('Please enter your zip code:')
@@ -37,7 +36,7 @@ access_token = 'e0dd630ae5f950ff67dad0c1cb20ae56e89dcd0b'
 
 url = 'https://api.spark.io/v1/devices/' + access_id + '/' + function
 data = {'access_token': access_token}
-array_of_RGB_values = [[128,255,0]]
+array_of_RGB_values = [[0,0,0]]
 
 def check_weather():
 	#API Pulls, Weather Data, and Weather codes
@@ -115,10 +114,8 @@ def get_RGB(temperature):
 def change_colors(old_red, old_blue, old_green, new_red, new_green, new_blue, args):
 	print(old_red, old_green, old_blue)	
 	print(new_red, new_green, new_blue)	
-	special_case = True
-	if (old_red != new_red and old_blue != new_blue and old_green != new_green):
-		special_case = False
-	while (old_red != new_red and old_blue != new_blue and old_green != new_green) is not special_case: 
+
+	while (old_red != new_red or old_blue != new_blue or old_green != new_green): 
 
 		if old_red != new_red:
 			if old_red < new_red:
