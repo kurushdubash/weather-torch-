@@ -41,7 +41,7 @@ access_token = 'e0dd630ae5f950ff67dad0c1cb20ae56e89dcd0b'
 
 url = 'https://api.spark.io/v1/devices/' + access_id + '/' + function
 data = {'access_token': access_token}
-array_of_RGB_values = [[128,255,0]]
+array_of_RGB_values = [[0,0,0]]
 
 def check_weather():
 	#API Pulls, Weather Data, and Weather codes
@@ -123,11 +123,9 @@ def change_colors(old_red, old_green, old_blue, new_red, new_green, new_blue, ar
 	# Torch color smooth transition between temperature settings
 	print(old_red, old_green, old_blue)	
 	print(new_red, new_green, new_blue)	
-	special_case = True
-	if (old_red != new_red and old_blue != new_blue and old_green != new_green):
-		special_case = False
-	while (old_red != new_red and old_blue != new_blue and old_green != new_green) is not special_case: 
-		
+	
+	while (old_red != new_red or old_blue != new_blue or old_green != new_green): 
+
 		if old_red != new_red:
 			if old_red < new_red:
 				if old_red + 20 > new_red:
