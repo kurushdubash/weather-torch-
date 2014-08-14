@@ -1,6 +1,7 @@
 113 - clear / sunny
 116 - partly cloudy
-119 - overcast
+119 - cloudy
+122 - overcast
 
 143 - mist
 176 - patchy rain
