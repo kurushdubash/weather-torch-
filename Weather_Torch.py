@@ -37,14 +37,14 @@ access_token = 'e0dd630ae5f950ff67dad0c1cb20ae56e89dcd0b'
 
 url = 'https://api.spark.io/v1/devices/' + access_id + '/' + function
 data = {'access_token': access_token}
-array_of_RGB_values = [list(0, 0, 0)]
+array_of_RGB_values = [[128,255,0]]
 
 def check_weather():
 	#API Pulls, Weather Data, and Weather codes
 	weather_json = get_weather_json(zip_code_input)
 	temp = get_temperature(weather_json)
 	weather_code = get_forcast(weather_json)
-
+	print(temp, 'F')
 	print(weather_code)
 
 	#Setting arguments for weather torch
@@ -57,9 +57,9 @@ def check_weather():
 	else: 
 		args+= 'upside_down=0'
 
-	print(args)
 	last_RGB_values = array_of_RGB_values.pop()
-	change_colors(last_RGB_values[0], last_RGB_values[1], last_RGB_values[2], get_RGB(temp), args)
+	red, green, blue = get_RGB(int(temp))
+	change_colors(last_RGB_values[0], last_RGB_values[1], last_RGB_values[2], red, green, blue , args)
 	sleep(15)
 
 def upside_down(weather_code):
@@ -75,43 +75,94 @@ def sleep(refresh_rate):
 		sleep_time-=1
 
 def get_RGB(temperature):
-	return 'red_energy=255'
+
+	red = 0
+	green = 0
+	blue = 0
+	if temperature < 50:
+		blue = 255
+	elif temperature < 55:
+		green = 128
+		blue = 255
+	elif temperature < 60:
+		green = 255
+		blue = 128
+	elif temperature < 65:
+		green = 255
+		blue = 255
+	elif temperature < 70:
+		green = 255
+		blue = 0
+	elif temperature < 75:
+		red = 128
+		green = 255
+	elif temperature < 80:
+		red = 255
+		green = 255
+	elif temperature < 85:
+		red = 255
+		green = 128
+	elif temperature < 90:
+		red = 255
+		green = 102
+		blue = 102
+	elif temperature < 95:
+		red = 255
+	elif temperature >= 95:
+		red = 153
+	return red, green, blue
 
 def change_colors(old_red, old_blue, old_green, new_red, new_green, new_blue, args):
-	while old_red != new_red and old_blue != new_blue and old_green != new_green: 
-		if old_red > new_red:
-			if old_red - 20 <0:
-				old_red = 0
+	print(old_red, old_green, old_blue)	
+	print(new_red, new_green, new_blue)	
+	special_case = True
+	if (old_red != new_red and old_blue != new_blue and old_green != new_green):
+		special_case = False
+	while (old_red != new_red and old_blue != new_blue and old_green != new_green) is not special_case: 
+
+		if old_red != new_red:
+			if old_red < new_red:
+				if old_red + 20 > new_red:
+					old_red = new_red
+				else:
+					old_red += 20
 			else:
-				old_red-=20
-		else:
-			if old_red + 20 > 255:
-				old_red = 255
+				if old_red - 20 < new_red:
+					old_red = new_red
+				else:
+					old_red -= 20
+
+		if old_green != new_green:
+			if old_green < new_green:
+				if old_green + 20 > new_green:
+					old_green = new_green
+				else:
+					old_green += 20
 			else:
-				old_red+=20
-		if old_green > new_green:
-			if old_green - 20 < 0:
-				old_green = 0
+				if old_green - 20 < new_green:
+					old_green = new_green
+				else:
+					old_green -= 20
+
+		if old_blue != new_blue:
+			if old_blue < new_blue:
+				if old_blue + 20 > new_blue:
+					old_blue = new_blue
+				else:
+					old_blue += 20
 			else:
-				old_green-=20
-		else:
-			if old_green + 20 > 255:
-				old_green = 255
-			else:
-				old_green+=20
-		if old_blue > new_blue:
-			if old_blue - 20 < 0:
-				old_blue = 0
-			else:
-				old_blue-=20
-		else:
-			if old_blue + 20 > 255:
-				old_blue = 255
-			else:
-				old_blue+=20
-		
-	data['args'] = args + 'red_energy=' + str(old_red) + ',green_energy=' + str(old_green)+ ',blue_energy=' + str(old_blue)
-	requests.post(url, data=data)
+				if old_blue - 20 < new_blue:
+					old_blue = new_blue
+				else:
+					old_blue -= 20
+
+		data['args'] = args + ',red_energy=' + str(old_red) + ',green_energy=' + str(old_green)+ ',blue_energy=' + str(old_blue)
+		print(data['args'])
+		requests.post(url, data=data)
+		if old_red == new_red and old_blue == new_blue and old_green == new_green:
+			break;
+
+	array_of_RGB_values.append([new_red, new_green, new_blue])
 
 
 zip_code_input = get_zip_code()
