@@ -36,6 +36,8 @@ access_id = '53ff6f065075535140441187'
 access_token = 'e0dd630ae5f950ff67dad0c1cb20ae56e89dcd0b'
 
 url = 'https://api.spark.io/v1/devices/' + access_id + '/' + function
+data = {'access_token': access_token}
+array_of_RGB_values = [list(0, 0, 0)]
 
 def check_weather():
 	#API Pulls, Weather Data, and Weather codes
@@ -44,11 +46,9 @@ def check_weather():
 	weather_code = get_forcast(weather_json)
 
 	print(weather_code)
+
 	#Setting arguments for weather torch
 
-	red = 0
-	green = 0
-	blue = 0
 	is_upside_down = upside_down(int(weather_code))
 
 	args = ''
@@ -56,12 +56,10 @@ def check_weather():
 		args+= 'upside_down=1'
 	else: 
 		args+= 'upside_down=0'
-		
-	args = args + get_RGB()
-	print(args)
-	data = {'access_token': access_token, 'args': args}
-	r = requests.post(url, data=data)
 
+	print(args)
+	last_RGB_values = array_of_RGB_values.pop()
+	change_colors(last_RGB_values[0], last_RGB_values[1], last_RGB_values[2], get_RGB(temp), args)
 	sleep(15)
 
 def upside_down(weather_code):
@@ -76,22 +74,47 @@ def sleep(refresh_rate):
 		time.sleep(60)
 		sleep_time-=1
 
-def get_RGB():
+def get_RGB(temperature):
 	return 'red_energy=255'
 
-# def change_colors():
-# 	while value > 0: 
-# 	if value - 20 < 0:
-# 		value = 0
-# 	else:
-# 		value-=20
-# 	args ='upside_down=1,red_energy=' + str(value)
-# 	data['args'] = args
-# 	print (args)
-# 	requests.post(url, data=data)
+def change_colors(old_red, old_blue, old_green, new_red, new_green, new_blue, args):
+	while old_red != new_red and old_blue != new_blue and old_green != new_green: 
+		if old_red > new_red:
+			if old_red - 20 <0:
+				old_red = 0
+			else:
+				old_red-=20
+		else:
+			if old_red + 20 > 255:
+				old_red = 255
+			else:
+				old_red+=20
+		if old_green > new_green:
+			if old_green - 20 < 0:
+				old_green = 0
+			else:
+				old_green-=20
+		else:
+			if old_green + 20 > 255:
+				old_green = 255
+			else:
+				old_green+=20
+		if old_blue > new_blue:
+			if old_blue - 20 < 0:
+				old_blue = 0
+			else:
+				old_blue-=20
+		else:
+			if old_blue + 20 > 255:
+				old_blue = 255
+			else:
+				old_blue+=20
+		
+	data['args'] = args + 'red_energy=' + str(old_red) + ',green_energy=' + str(old_green)+ ',blue_energy=' + str(old_blue)
+	requests.post(url, data=data)
+
 
 zip_code_input = get_zip_code()
-check_weather()
 while True:
 	check_weather()
 
