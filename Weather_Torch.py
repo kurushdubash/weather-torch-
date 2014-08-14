@@ -2,9 +2,9 @@ import requests
 import time
 
 api = '2ffd40362f6c4bdd050c1ad48eaa7891cb1e4890'
-ferinheight = True
 
 def get_zip_code():
+	# User input Zip Code for weather data
 	print('Please enter your zip code:')
 	zip_code = input()
 	while len(zip_code) < 5 or len(zip_code) > 5:
@@ -14,22 +14,26 @@ def get_zip_code():
 	return str(zip_code)
 
 def get_weather_json(zip_code):
+	# GETs the JSON from the worldweatheronline API
 	weather_url = 'http://api.worldweatheronline.com/free/v1/weather.ashx?q=' + str(zip_code) + '&format=json&num_of_days=1&key=' + str(api)
 	weather_data = requests.get(weather_url)
 	weather_json = weather_data.json()
 	return weather_json
 
 def get_temperature(json_data):
+	# Retrieves Temperature string from JSON
 	temp = json_data['data']['current_condition'][0]['temp_F']
 	return temp
 
 def get_forcast(json_data):
+	# Retrieves forcast code string from JSON
 	forcast = json_data['data']['current_condition'][0]['weatherCode']
 	return forcast
 
-# def get_windspeed(json_data):
-# 	wind - json_data['data']['current_condition'][0]['windspeedMiles']
-# 	return str(wind)
+def get_windspeed(json_data):
+	# Retrieves wind MPH string from JSON
+ 	wind = json_data['data']['current_condition'][0]['windspeedMiles']
+ 	return str(wind)
 
 function = 'params'
 access_id = '53ff6f065075535140441187'
@@ -44,13 +48,14 @@ def check_weather():
 	weather_json = get_weather_json(zip_code_input)
 	temp = get_temperature(weather_json)
 	weather_code = get_forcast(weather_json)
+	wind = get_windspeed(weather_json)
 	print(temp, 'F')
-	print(weather_code)
-
+	print(weather_code, "Weather Code")
+	print(wind, "MPH wind")
 	#Setting arguments for weather torch
 
 	is_upside_down = upside_down(int(weather_code))
-
+	# wHY CANP WE JUST PUT THESE STRINGS IN THE UPSIDE_DOWN FUNCTION INSTEAD OF TRUE/FALSE?
 	args = ''
 	if is_upside_down:
 		args+= 'upside_down=1'
@@ -63,11 +68,13 @@ def check_weather():
 	sleep(15)
 
 def upside_down(weather_code):
+	# If JSON returns rainy/snowy forcast, this function returns True. 
 	if weather_code > 142:
 		return True
 	return False
 
 def sleep(refresh_rate):
+	# Time between Weather API calls (time interval between Torch color updates)
 	sleep_time = refresh_rate
 	while sleep_time > 0:
 		print(str(sleep_time), 'minutes remaining')
@@ -75,7 +82,7 @@ def sleep(refresh_rate):
 		sleep_time-=1
 
 def get_RGB(temperature):
-
+	# Gets the Torch Light colors based on the current Temperature
 	red = 0
 	green = 0
 	blue = 0
@@ -112,14 +119,15 @@ def get_RGB(temperature):
 		red = 153
 	return red, green, blue
 
-def change_colors(old_red, old_blue, old_green, new_red, new_green, new_blue, args):
+def change_colors(old_red, old_green, old_blue, new_red, new_green, new_blue, args):
+	# Torch color smooth transition between temperature settings
 	print(old_red, old_green, old_blue)	
 	print(new_red, new_green, new_blue)	
 	special_case = True
 	if (old_red != new_red and old_blue != new_blue and old_green != new_green):
 		special_case = False
 	while (old_red != new_red and old_blue != new_blue and old_green != new_green) is not special_case: 
-
+		
 		if old_red != new_red:
 			if old_red < new_red:
 				if old_red + 20 > new_red:
