@@ -41,7 +41,7 @@ access_token = 'e0dd630ae5f950ff67dad0c1cb20ae56e89dcd0b'
 
 url = 'https://api.spark.io/v1/devices/' + access_id + '/' + function
 data = {'access_token': access_token}
-array_of_RGB_values = [[0,0,0]]
+array_of_RGB_values = [[180,145,0]]
 
 def check_weather():
 	#API Pulls, Weather Data, and Weather codes
@@ -65,7 +65,7 @@ def check_weather():
 	last_RGB_values = array_of_RGB_values.pop()
 	red, green, blue = get_RGB(int(temp))
 	change_colors(last_RGB_values[0], last_RGB_values[1], last_RGB_values[2], red, green, blue , args)
-	sleep(15)
+	sleep(10)
 
 def upside_down(weather_code):
 	# If JSON returns rainy/snowy forcast, this function returns True. 
@@ -128,39 +128,39 @@ def change_colors(old_red, old_green, old_blue, new_red, new_green, new_blue, ar
 
 		if old_red != new_red:
 			if old_red < new_red:
-				if old_red + 20 > new_red:
+				if old_red + 5 > new_red:
 					old_red = new_red
 				else:
-					old_red += 20
+					old_red += 5
 			else:
-				if old_red - 20 < new_red:
+				if old_red - 5 < new_red:
 					old_red = new_red
 				else:
-					old_red -= 20
+					old_red -= 5
 
 		if old_green != new_green:
 			if old_green < new_green:
-				if old_green + 20 > new_green:
+				if old_green + 5 > new_green:
 					old_green = new_green
 				else:
-					old_green += 20
+					old_green += 5
 			else:
-				if old_green - 20 < new_green:
+				if old_green - 5 < new_green:
 					old_green = new_green
 				else:
-					old_green -= 20
+					old_green -= 5
 
 		if old_blue != new_blue:
 			if old_blue < new_blue:
-				if old_blue + 20 > new_blue:
+				if old_blue + 5 > new_blue:
 					old_blue = new_blue
 				else:
-					old_blue += 20
+					old_blue += 5
 			else:
-				if old_blue - 20 < new_blue:
+				if old_blue - 5 < new_blue:
 					old_blue = new_blue
 				else:
-					old_blue -= 20
+					old_blue -= 5
 
 		data['args'] = args + ',red_energy=' + str(old_red) + ',green_energy=' + str(old_green)+ ',blue_energy=' + str(old_blue)
 		print(data['args'])
