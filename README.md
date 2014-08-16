@@ -1,17 +1,17 @@
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~WEATHER TORCH LAMP~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~INSPIRED BY TWITTER TORCH by SPARK Community User RUEDI~~~~~~~~~~~~~~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~~~CREDIT TO PLAN44 for MESSAGE TORCH Project on GIT: https://github.com/plan44/messagetorch ~~~~~~~~
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+<html>
+<body>
+<h1> WEATHER TORCH LAMP </h1>
+
+<h2>INSPIRED BY TWITTER TORCH by SPARK Community User RUEDI</h2>
+
+<h3>CREDIT TO PLAN44 for MESSAGE TORCH Project on GIT: https://github.com/plan44/messagetorch</h3>
 
 
 
 
 
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~EXAMPLE SPARK API CALLS~~~~~~~~~~~~~~~~~~~~
+~~~~EXAMPLE SPARK API CALLS~~~~~
 
 Three modes: 1: Message, 2: , 3: Cheerlights
 
@@ -27,3 +27,5 @@ curl https://api.spark.io/v1/devices/53ff6f065075535140441187/params \-d access_
 
 curl https://api.spark.io/v1/devices/53ff6f065075535140441187/params \-d access_token=e0dd630ae5f950ff67dad0c1cb20ae56e89dcd0b \-d “args=upside_down=1”
 
+</body>
+</html>
