@@ -1,31 +1,37 @@
-<html>
-<body>
-<h1> WEATHER TORCH LAMP </h1>
+<br>
+<br>
+<h4> A fun and functional addition to the Message Torch porject that uses local Weather data to control the animation of the Torch </h4>
 
-<h2>INSPIRED BY TWITTER TORCH by SPARK Community User RUEDI</h2>
+After seeing the Message Torch project by plann44, I not only wanted to build the torch myself, but I also came up with many different ideas 
+on how I could modify the animations to do what I wanted. After having worked with temperature sensors and building temperature readers using 
+LCDs, I came up with a mod: Use the local weather data to change the colors of the torch; Dark red corresponding to high Temperatures( 95 degrees F) 
+while light blue corresponding to low temperatures (50 degrees F). After further thought, I thought, WHY NOT flip the flame animation if
+the forecast is rain or snow. Flipping the animation visually looks like rain is falling instead of flame sparks coming up. Changing the
+color to blue with the animation flipped looks exactly like rain! 
+<br>
+<br>
+After thinking about it, I realized that I should use online Weather services instead of a physical Temperature reader. I looked at various Weather APIs
+and finally chose one that was accurate and provided all the information I needed. I take the JSON data and parse the current Temperature, 
+current Wind speed, and the Forecast. 
+<br>
+The temperature is used to control the color of the flame animation.
+<br>
+The wind speed controls how fast the flame goes up (or how fast the rain comes down)
+<br>
+The forecast tells the Weather Torch whether it is raining or clear. This controls the animation orientation.
+<br>
+<br>
 
-<h3>CREDIT TO PLAN44 for MESSAGE TORCH Project on GIT: https://github.com/plan44/messagetorch</h3>
+<h4> How to run Weather Torch </h4>
+First, you must get the Message Torch project from PLAN44's Github. He is the author of the animation that I use for the Weather Torch.
+<br>
+Next, my code is written in Python, so make sure you have Python3 installed on your computer. Download Weather Torch code from here, and 
+run the Weather_Torch.py using your command prompt. 
+<br>
+The program will ask you of your local ZIP Code. Enter it in, and your Weather Torch is ready to go! As long is the python program is running, 
+your Weather Torch will be updated every 10 minutes according to your local weather.
 
 
-
-
-
-
-~~~~EXAMPLE SPARK API CALLS~~~~~
-
-Three modes: 1: Message, 2: , 3: Cheerlights
-
-curl https://api.spark.io/v1/devices/53ff6f065075535140441187/params \-d access_token=e0dd630ae5f950ff67dad0c1cb20ae56e89dcd0b \-d “args=mode=3,brightness=140”
-
-curl https://api.spark.io/v1/devices/53ff6f065075535140441187/message \-d access_token=e0dd630ae5f950ff67dad0c1cb20ae56e89dcd0b \-d “args=I AM COOL”
-
-
-curl https://api.spark.io/v1/devices/53ff6f065075535140441187/params \-d access_token=e0dd630ae5f950ff67dad0c1cb20ae56e89dcd0b \-d “args=red_text=140”
-
-
-curl https://api.spark.io/v1/devices/53ff6f065075535140441187/params \-d access_token=e0dd630ae5f950ff67dad0c1cb20ae56e89dcd0b \-d “args=lamp_red=255”
-
-curl https://api.spark.io/v1/devices/53ff6f065075535140441187/params \-d access_token=e0dd630ae5f950ff67dad0c1cb20ae56e89dcd0b \-d “args=upside_down=1”
-
+</center> 
 </body>
 </html>
