@@ -1,3 +1,12 @@
+<html>
+<body bgcolor=(0,0,0)><font color=white>
+<center><h1><font color=red =arial> <U>WEATHER TORCH LAMP </U></font> </h1>
+
+<h5> INSPIRED BY TWITTER TORCH by SPARK Community User RUEDI</h5>
+
+<h5>CREDIT TO PLAN44 for MESSAGE TORCH Project on GIT: https://github.com/plan44/messagetorch </h5>
+
+<img src="http://affordableamericaninsurance.com/wp-content/uploads/iStock_000017482380Large.jpg" height=250 width=300>
 <br>
 <br>
 <h4> A fun and functional addition to the Message Torch porject that uses local Weather data to control the animation of the Torch </h4>
