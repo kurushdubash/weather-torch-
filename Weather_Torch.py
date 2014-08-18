@@ -41,7 +41,7 @@ access_token = 'e0dd630ae5f950ff67dad0c1cb20ae56e89dcd0b'
 
 url = 'https://api.spark.io/v1/devices/' + access_id + '/' + function
 data = {'access_token': access_token}
-array_of_RGB_values = [[180,145,0]]
+array_of_RGB_values = [[0,0,0]]
 
 def check_weather():
 	#API Pulls, Weather Data, and Weather codes
@@ -54,13 +54,8 @@ def check_weather():
 	print(wind, "MPH wind")
 	#Setting arguments for weather torch
 
-	is_upside_down = upside_down(int(weather_code))
-	# wHY CANP WE JUST PUT THESE STRINGS IN THE UPSIDE_DOWN FUNCTION INSTEAD OF TRUE/FALSE?
-	args = ''
-	if is_upside_down:
-		args+= 'upside_down=1'
-	else: 
-		args+= 'upside_down=0'
+	args = upside_down(int(weather_code))
+
 
 	last_RGB_values = array_of_RGB_values.pop()
 	red, green, blue = get_RGB(int(temp))
@@ -70,8 +65,8 @@ def check_weather():
 def upside_down(weather_code):
 	# If JSON returns rainy/snowy forcast, this function returns True. 
 	if weather_code > 142:
-		return True
-	return False
+		return 'upside_down=1'
+	return 'upside_down=0'
 
 def sleep(refresh_rate):
 	# Time between Weather API calls (time interval between Torch color updates)
