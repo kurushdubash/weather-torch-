@@ -1,10 +1,12 @@
 import requests
 import time
+from datetime import datetime
 
 api = '2ffd40362f6c4bdd050c1ad48eaa7891cb1e4890'
 
+# User input Zip Code for weather data
 def get_zip_code():
-	# User input Zip Code for weather data
+	
 	print('Please enter your zip code:')
 	zip_code = input()
 	while len(zip_code) < 5 or len(zip_code) > 5:
@@ -13,27 +15,53 @@ def get_zip_code():
 		zip_code = input()
 	return str(zip_code)
 
+# GETs the JSON from the worldweatheronline API
 def get_weather_json(zip_code):
-	# GETs the JSON from the worldweatheronline API
+	
 	weather_url = 'http://api.worldweatheronline.com/free/v1/weather.ashx?q=' + str(zip_code) + '&format=json&num_of_days=1&key=' + str(api)
 	weather_data = requests.get(weather_url)
 	weather_json = weather_data.json()
 	return weather_json
 
+# Retrieves Temperature string from JSON
 def get_temperature(json_data):
-	# Retrieves Temperature string from JSON
 	temp = json_data['data']['current_condition'][0]['temp_F']
 	return temp
 
+# Retrieves forcast code string from JSON
 def get_forcast(json_data):
-	# Retrieves forcast code string from JSON
 	forcast = json_data['data']['current_condition'][0]['weatherCode']
 	return forcast
 
+# Retrieves wind MPH string from JSON
 def get_windspeed(json_data):
-	# Retrieves wind MPH string from JSON
- 	wind = json_data['data']['current_condition'][0]['windspeedMiles']
- 	return str(wind)
+	wind = json_data['data']['current_condition'][0]['windspeedMiles']
+	return str(wind)
+
+# Gets the current time and posts it on the Torch every minute
+def timenow():
+	time_data = datetime.now().time().isoformat()
+	url = 'https://api.spark.io/v1/devices/' + access_id + '/message'
+	# print(type(time_data)) # str
+	# print(time_data) # 00:42:55.923423423
+
+	hour = int(time_data[0:2])
+	minute = time_data[3:5]
+	light = 'AM'
+
+	if hour > 12:
+		hour = hour - 12
+		light = 'PM'
+	elif hour == 00:
+		hour = 12
+	
+	hour = str(hour)
+	time = hour + ':' + minute + ' ' + light
+	# print(time)
+	data["message"] = time
+	requests.post(url, data=data)
+	
+
 
 function = 'params'
 access_id = '53ff6f065075535140441187'
@@ -43,12 +71,14 @@ url = 'https://api.spark.io/v1/devices/' + access_id + '/' + function
 data = {'access_token': access_token}
 array_of_RGB_values = [[0,0,0]]
 
+#API Pulls, Weather Data, and Weather codes
 def check_weather():
-	#API Pulls, Weather Data, and Weather codes
+	
 	weather_json = get_weather_json(zip_code_input)
 	temp = get_temperature(weather_json)
 	weather_code = get_forcast(weather_json)
 	wind = get_windspeed(weather_json)
+	
 	print(temp, 'F')
 	print(weather_code, "Weather Code")
 	print(wind, "MPH wind")
@@ -62,22 +92,24 @@ def check_weather():
 	change_colors(last_RGB_values[0], last_RGB_values[1], last_RGB_values[2], red, green, blue , args)
 	sleep(10)
 
+# If JSON returns rainy/snowy forcast, this function returns True. 
 def upside_down(weather_code):
-	# If JSON returns rainy/snowy forcast, this function returns True. 
+	
 	if weather_code > 142:
 		return 'upside_down=1'
 	return 'upside_down=0'
 
+# Time between Weather API calls (time interval between Torch color updates)
 def sleep(refresh_rate):
-	# Time between Weather API calls (time interval between Torch color updates)
+	
 	sleep_time = refresh_rate
 	while sleep_time > 0:
 		print(str(sleep_time), 'minutes remaining')
 		time.sleep(60)
 		sleep_time-=1
 
+# Gets the Torch Light colors based on the current Temperature
 def get_RGB(temperature):
-	# Gets the Torch Light colors based on the current Temperature
 	red = 0
 	green = 0
 	blue = 0
@@ -114,8 +146,8 @@ def get_RGB(temperature):
 		red = 153
 	return red, green, blue
 
+# Torch color smooth transition between temperature settings
 def change_colors(old_red, old_green, old_blue, new_red, new_green, new_blue, args):
-	# Torch color smooth transition between temperature settings
 	print(old_red, old_green, old_blue)	
 	print(new_red, new_green, new_blue)	
 	
@@ -168,7 +200,9 @@ def change_colors(old_red, old_green, old_blue, new_red, new_green, new_blue, ar
 
 zip_code_input = get_zip_code()
 while True:
+	timenow()
 	check_weather()
+	
 
 
 
