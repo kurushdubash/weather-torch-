@@ -104,6 +104,7 @@ def sleep(refresh_rate):
 	while sleep_time > 0:
 		print(str(sleep_time), 'minutes remaining')
 		time.sleep(60)
+		timenow()
 		sleep_time-=1
 
 # Gets the Torch Light colors based on the current Temperature
@@ -199,7 +200,7 @@ def change_colors(old_red, old_green, old_blue, new_red, new_green, new_blue, ar
 zip_code_input = get_zip_code()
 while True:
 	check_weather()
-	# timenow()
+	
 
 	
 
