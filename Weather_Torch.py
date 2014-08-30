@@ -199,7 +199,7 @@ def change_colors(old_red, old_green, old_blue, new_red, new_green, new_blue, ar
 zip_code_input = get_zip_code()
 while True:
 	check_weather()
-	timenow()
+	# timenow()
 
 	
 
