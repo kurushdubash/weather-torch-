@@ -63,7 +63,7 @@ def timenow():
 	
 function = 'params'
 access_id = '53ff6f065075535140441187'
-access_token = 'e0dd630ae5f950ff67dad0c1cb20ae56e89dcd0b'
+access_token = '9d5a04c38d4cff191d25388a7ba7c03efd504ee2'
 
 url = 'https://api.spark.io/v1/devices/' + access_id + '/' + function
 data = {'access_token': access_token}
@@ -119,10 +119,10 @@ def get_RGB(temperature):
 		blue = 255
 	elif temperature < 60:
 		green = 255
-		blue = 128
+		blue = 255
 	elif temperature < 65:
 		green = 255
-		blue = 255
+		blue = 128
 	elif temperature < 70:
 		green = 255
 		blue = 0
