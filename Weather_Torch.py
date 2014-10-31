@@ -6,7 +6,8 @@ api = '2ffd40362f6c4bdd050c1ad48eaa7891cb1e4890'
 
 # User input Zip Code for weather data
 def get_zip_code():
-	
+	""" User input Zip Code for weather data
+	"""
 	print('Please enter your zip code:')
 	zip_code = input()
 	while len(zip_code) < 5 or len(zip_code) > 5:
@@ -15,31 +16,35 @@ def get_zip_code():
 		zip_code = input()
 	return str(zip_code)
 
-# GETs the JSON from the worldweatheronline API
 def get_weather_json(zip_code):
-	
+	""" GETs the JSON from the worldweatheronline API
+	"""
 	weather_url = 'http://api.worldweatheronline.com/free/v1/weather.ashx?q=' + str(zip_code) + '&format=json&num_of_days=1&key=' + str(api)
 	weather_data = requests.get(weather_url)
 	weather_json = weather_data.json()
 	return weather_json
 
-# Retrieves Temperature string from JSON
 def get_temperature(json_data):
+	""" Retrieves Temperature string from JSON
+	"""
 	temp = json_data['data']['current_condition'][0]['temp_F']
 	return temp
 
-# Retrieves forcast code string from JSON
 def get_forcast(json_data):
+	""" Retrieves forcast code string from JSON
+	"""
 	forcast = json_data['data']['current_condition'][0]['weatherCode']
 	return forcast
 
-# Retrieves wind MPH string from JSON
 def get_windspeed(json_data):
+	""" Retrieves wind MPH string from JSON
+	"""
 	wind = json_data['data']['current_condition'][0]['windspeedMiles']
 	return str(wind)
 
-# Gets the current time and posts it on the Torch every minute
 def timenow():
+	""" Gets the current time and posts it on the Torch every minute
+	"""
 	time_data = datetime.now().time().isoformat()
 	url = 'https://api.spark.io/v1/devices/' + access_id + '/message'
 	# print(type(time_data)) # str
@@ -69,9 +74,9 @@ url = 'https://api.spark.io/v1/devices/' + access_id + '/' + function
 data = {'access_token': access_token}
 array_of_RGB_values = [[0,0,0]]
 
-#API Pulls, Weather Data, and Weather codes
 def check_weather():
-	
+	""" API Pulls, Weather Data, and Weather codes
+	"""
 	weather_json = get_weather_json(zip_code_input)
 	temp = get_temperature(weather_json)
 	weather_code = get_forcast(weather_json)
@@ -86,20 +91,20 @@ def check_weather():
 
 
 	last_RGB_values = array_of_RGB_values.pop()
-	red, green, blue = get_RGB(int(temp))
-	change_colors(last_RGB_values[0], last_RGB_values[1], last_RGB_values[2], red, green, blue , args)
+	red, green, blue = location_specific_temp_spread(int(temp), 45, 85) #imputing temp, min temp range, max temp range
+	change_colors(last_RGB_values[0], last_RGB_values[1], last_RGB_values[2], red, green, blue , args) #function call to change colors
 	sleep(10) #function call to do 10 iterations (=10 minutes currently)
 
-# If JSON returns rainy/snowy forcast, this function returns True. 
 def upside_down(weather_code):
-	
+	""" If JSON returns rainy/snowy forcast, this function returns True. 
+	"""
 	if weather_code > 142:
 		return 'upside_down=1'
 	return 'upside_down=0'
 
-# Time between Weather API calls (time interval between Torch color updates)
 def sleep(refresh_rate):
-	
+	""" Time between Weather API calls (time interval between Torch color updates)
+	"""
 	sleep_time = refresh_rate
 	while sleep_time > 0:
 		print(str(sleep_time), 'minutes remaining')
@@ -107,46 +112,63 @@ def sleep(refresh_rate):
 		timenow()
 		sleep_time-=1
 
-# Gets the Torch Light colors based on the current Temperature
-def get_RGB(temperature):
+def location_specific_temp_spread(temperature, mini, maxi):
+	""" Since all cities have different temperature spreads, this function normalizes the lamp color
+	temperature spreads
+	"""
+	spread = abs(maxi - mini)
+	increment = spread // 11
+	list_of_temp_ranges = []
+	for i in range(11):
+		list_of_temp_ranges.append(mini + (increment * i))
+
+	return get_RGB(temperature, list_of_temp_ranges)
+
+def get_RGB(temperature, lst):
+	""" Gets the Torch Light colors based on the current Temperature
+		temperature: the current temperature
+		lst: the list of the temperature ranges for color change spread
+		(ORIGINALLY: went from <50 to >= 95 with 11 ranges)
+	"""
 	red = 0
 	green = 0
 	blue = 0
-	if temperature < 50:
+	if temperature < lst[0]:
 		blue = 255
-	elif temperature < 55:
+	elif temperature < lst[1]:
 		green = 128
 		blue = 255
-	elif temperature < 60:
+	elif temperature < lst[2]:
 		green = 255
 		blue = 255
-	elif temperature < 65:
+	elif temperature < lst[3]:
 		green = 255
 		blue = 128
-	elif temperature < 70:
+	elif temperature < lst[4]:
 		green = 255
 		blue = 0
-	elif temperature < 75:
+	elif temperature < lst[5]:
 		red = 128
 		green = 255
-	elif temperature < 80:
+	elif temperature < lst[6]:
 		red = 255
 		green = 255
-	elif temperature < 85:
+	elif temperature < lst[7]:
 		red = 255
 		green = 128
-	elif temperature < 90:
+	elif temperature < lst[8]:
 		red = 255
 		green = 102
 		blue = 102
-	elif temperature < 95:
+	elif temperature < lst[9]:
 		red = 255
-	elif temperature >= 95:
+	elif temperature >= lst[10]:
 		red = 153
 	return red, green, blue
 
-# Torch color smooth transition between temperature settings
 def change_colors(old_red, old_green, old_blue, new_red, new_green, new_blue, args):
+	""" Torch color smooth transition between temperature settings
+	"""
 	print(old_red, old_green, old_blue)	
 	print(new_red, new_green, new_blue)	
 	
