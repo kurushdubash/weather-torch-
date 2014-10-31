@@ -63,7 +63,7 @@ def timenow():
 	
 function = 'params'
 access_id = '53ff6f065075535140441187'
-access_token = '9d5a04c38d4cff191d25388a7ba7c03efd504ee2'
+access_token = 'a5c190e99b6803f74533e2876feb0c687e44cada'
 
 url = 'https://api.spark.io/v1/devices/' + access_id + '/' + function
 data = {'access_token': access_token}
@@ -88,7 +88,7 @@ def check_weather():
 	last_RGB_values = array_of_RGB_values.pop()
 	red, green, blue = get_RGB(int(temp))
 	change_colors(last_RGB_values[0], last_RGB_values[1], last_RGB_values[2], red, green, blue , args)
-	sleep(10)
+	sleep(10) #function call to do 10 iterations (=10 minutes currently)
 
 # If JSON returns rainy/snowy forcast, this function returns True. 
 def upside_down(weather_code):
@@ -103,7 +103,7 @@ def sleep(refresh_rate):
 	sleep_time = refresh_rate
 	while sleep_time > 0:
 		print(str(sleep_time), 'minutes remaining')
-		time.sleep(60)
+		time.sleep(60) #60 seconds
 		timenow()
 		sleep_time-=1
 
@@ -200,17 +200,3 @@ def change_colors(old_red, old_green, old_blue, new_red, new_green, new_blue, ar
 zip_code_input = get_zip_code()
 while True:
 	check_weather()
-	
-
-	
-
-
-
-
-
-
-
-
-
-
-
