@@ -1,4 +1,3 @@
-<html>
 <body bgcolor=(0,0,0)><font color=white>
 <html>
 <head> <style type="text/css"> </style> </head>
@@ -9,8 +8,10 @@
 
 <h5>CREDIT TO PLAN44 for MESSAGE TORCH Project on GIT: https://github.com/plan44/messagetorch </h5>
 
-[![IMAGE ALT TEXT HERE](http://http://img.youtube.com/vi/rRV53fUoXds/0.jpg)](https://www.youtube.com/watch?v=rRV53fUoXds&list=UUjrJYBS4EucD-6ArePHYxaQ)
 
+<a href="https://www.youtube.com/watch?v=rRV53fUoXds&list=UUjrJYBS4EucD-6ArePHYxaQ">
+	<img src="http://img.youtube.com/vi/rRV53fUoXds/0.jpg" />
+</a>
 <br>
 Note: In this particular video, the lamp is not running the Weather Torch script. However, the same lamp
 and animations are being used. This is just to show how the lamp and its animation look like. If you are 
@@ -19,7 +20,7 @@ curious to what the lamp is running on in the video, please view the video discr
 <!-- <img src="http://affordableamericaninsurance.com/wp-content/uploads/iStock_000017482380Large.jpg" height=250 width=300> -->
 <br>
 <br>
-<h4> A fun and functional addition to the Message Torch porject that uses local Weather data to control the animation of the Torch </h4>
+<h4> A fun and functional addition to the Message Torch porject that uses local Weather data to control the animation of the Torch </h4> 
 
 After seeing the Message Torch project by plann44, I not only wanted to build the torch myself, but I also came up with many different ideas 
 on how I could modify the animations to do what I wanted. After having worked with temperature sensors and building temperature readers using 
