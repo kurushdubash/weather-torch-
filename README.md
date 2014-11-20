@@ -1,12 +1,22 @@
 <html>
 <body bgcolor=(0,0,0)><font color=white>
+<html>
+<head> <style type="text/css"> </style> </head>
+<body bgcolor=(0,0,0)><font color=white>
 <center><h1><font color=red =arial> <U>WEATHER TORCH</U></font> </h1>
 
 <h5> INSPIRED BY TWITTER TORCH by SPARK Community User RUEDI</h5>
 
 <h5>CREDIT TO PLAN44 for MESSAGE TORCH Project on GIT: https://github.com/plan44/messagetorch </h5>
 
-<img src="http://affordableamericaninsurance.com/wp-content/uploads/iStock_000017482380Large.jpg" height=250 width=300>
+<iframe src="https://www.youtube.com/embed/rRV53fUoXds?list=UUjrJYBS4EucD-6ArePHYxaQ" width="560" height="315"  frameborder="0" allowfullscreen></iframe>
+
+<br>
+Note: In this particular video, the lamp is not running the Weather Torch script. However, the same lamp
+and animations are being used. This is just to show how the lamp and its animation look like. If you are 
+curious to what the lamp is running on in the video, please view the video discription on YouTube.
+
+<!-- <img src="http://affordableamericaninsurance.com/wp-content/uploads/iStock_000017482380Large.jpg" height=250 width=300> -->
 <br>
 <br>
 <h4> A fun and functional addition to the Message Torch porject that uses local Weather data to control the animation of the Torch </h4>

@@ -198,7 +198,6 @@ def change_colors(old_red, old_green, old_blue, new_red, new_green, new_blue, ar
 		if old_blue != new_blue:
 			old_blue = color_value_changer(old_blue, new_blue)
 
-
 		data['args'] = args + ',red_energy=' + str(old_red) + ',green_energy=' + str(old_green)+ ',blue_energy=' + str(old_blue)
 		print(data['args'])
 		requests.post(url, data=data)
@@ -206,7 +205,6 @@ def change_colors(old_red, old_green, old_blue, new_red, new_green, new_blue, ar
 			break;
 
 	array_of_RGB_values.append([new_red, new_green, new_blue])
-
 
 zip_code_input = get_zip_code()
 while True:
