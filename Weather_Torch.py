@@ -4,7 +4,6 @@ from datetime import datetime
 
 api = '2ffd40362f6c4bdd050c1ad48eaa7891cb1e4890'
 
-# User input Zip Code for weather data
 def get_zip_code():
 	""" User input Zip Code for weather data
 	"""
@@ -30,10 +29,10 @@ def get_temperature(json_data):
 	temp = json_data['data']['current_condition'][0]['temp_F']
 	return temp
 
-def get_forcast(json_data):
+def get_precipitation(json_data):
 	""" Retrieves forcast code string from JSON
 	"""
-	forcast = json_data['data']['current_condition'][0]['weatherCode']
+	forcast = json_data['data']['current_condition'][0]['precipMM'] #weatherCode
 	return forcast
 
 def get_windspeed(json_data):
@@ -79,15 +78,15 @@ def check_weather():
 	"""
 	weather_json = get_weather_json(zip_code_input)
 	temp = get_temperature(weather_json)
-	weather_code = get_forcast(weather_json)
+	precipitation = get_precipitation(weather_json)
 	wind = get_windspeed(weather_json)
 	
 	print(temp, 'F')
-	print(weather_code, "Weather Code")
+	print(precipitation, "MM Precipitation") #Weather Code
 	print(wind, "MPH wind")
 	#Setting arguments for weather torch
 
-	args = upside_down(int(weather_code))
+	args = upside_down(float(precipitation))
 
 
 	last_RGB_values = array_of_RGB_values.pop()
@@ -95,10 +94,10 @@ def check_weather():
 	change_colors(last_RGB_values[0], last_RGB_values[1], last_RGB_values[2], red, green, blue , args) #function call to change colors
 	sleep(10) #function call to do 10 iterations (=10 minutes currently)
 
-def upside_down(weather_code):
+def upside_down(precipitation):
 	""" If JSON returns rainy/snowy forcast, this function returns True. 
 	"""
-	if weather_code > 142:
+	if precipitation > 0.1: #weather_code > 142:
 		return 'upside_down=1'
 	return 'upside_down=0'
 
@@ -169,46 +168,36 @@ def get_RGB(temperature, lst):
 def change_colors(old_red, old_green, old_blue, new_red, new_green, new_blue, args):
 	""" Torch color smooth transition between temperature settings
 	"""
-	print(old_red, old_green, old_blue)	
-	print(new_red, new_green, new_blue)	
+	print('Current Color Values:', old_red, old_green, old_blue)	
+	print('Intended Color Values:', new_red, new_green, new_blue)	
+
+	def color_value_changer(old_color, new_color):
+		""" Increments old RGB value until it reaches the desired value
+		"""
+		if old_color < new_color:
+			if old_color + 5 > new_color:
+				old_color = new_color
+			else:
+				old_color += 5
+		else:
+			if old_color - 5 < new_color:
+				old_color = new_color
+			else:
+				old_color -= 5
+		return old_color
 	
-	while (old_red != new_red or old_blue != new_blue or old_green != new_green): 
-
+	while (old_red != new_red or old_blue != new_blue or old_green != new_green): #keep going if old_color does not match new_color
+		
 		if old_red != new_red:
-			if old_red < new_red:
-				if old_red + 5 > new_red:
-					old_red = new_red
-				else:
-					old_red += 5
-			else:
-				if old_red - 5 < new_red:
-					old_red = new_red
-				else:
-					old_red -= 5
-
+			old_red = color_value_changer(old_red, new_red)
+			
 		if old_green != new_green:
-			if old_green < new_green:
-				if old_green + 5 > new_green:
-					old_green = new_green
-				else:
-					old_green += 5
-			else:
-				if old_green - 5 < new_green:
-					old_green = new_green
-				else:
-					old_green -= 5
+			old_green = color_value_changer(old_green, new_green)
+
 
 		if old_blue != new_blue:
-			if old_blue < new_blue:
-				if old_blue + 5 > new_blue:
-					old_blue = new_blue
-				else:
-					old_blue += 5
-			else:
-				if old_blue - 5 < new_blue:
-					old_blue = new_blue
-				else:
-					old_blue -= 5
+			old_blue = color_value_changer(old_blue, new_blue)
+
 
 		data['args'] = args + ',red_energy=' + str(old_red) + ',green_energy=' + str(old_green)+ ',blue_energy=' + str(old_blue)
 		print(data['args'])
