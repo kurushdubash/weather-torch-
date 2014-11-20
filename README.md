@@ -9,7 +9,7 @@
 
 <h5>CREDIT TO PLAN44 for MESSAGE TORCH Project on GIT: https://github.com/plan44/messagetorch </h5>
 
-<iframe src="https://www.youtube.com/embed/rRV53fUoXds?list=UUjrJYBS4EucD-6ArePHYxaQ" width="560" height="315"  frameborder="0" allowfullscreen></iframe>
+[![IMAGE ALT TEXT HERE](http://http://img.youtube.com/vi/rRV53fUoXds/0.jpg)](https://www.youtube.com/watch?v=rRV53fUoXds&list=UUjrJYBS4EucD-6ArePHYxaQ)
 
 <br>
 Note: In this particular video, the lamp is not running the Weather Torch script. However, the same lamp
