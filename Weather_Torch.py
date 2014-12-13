@@ -2,6 +2,8 @@ import requests
 import time
 from datetime import datetime
 
+
+
 api = '2ffd40362f6c4bdd050c1ad48eaa7891cb1e4890'
 
 def get_zip_code():
@@ -19,7 +21,20 @@ def get_weather_json(zip_code):
 	""" GETs the JSON from the worldweatheronline API
 	"""
 	weather_url = 'http://api.worldweatheronline.com/free/v1/weather.ashx?q=' + str(zip_code) + '&format=json&num_of_days=1&key=' + str(api)
+	
+
+
+
+
+	#try: ####################################################################### ADDED TRY EXCEPT CASE HERE!!!
 	weather_data = requests.get(weather_url)
+	#except ConnectionError as e:
+		#weather_data = "No Response"
+
+
+
+
+
 	weather_json = weather_data.json()
 	return weather_json
 
@@ -92,7 +107,7 @@ def check_weather():
 	last_RGB_values = array_of_RGB_values.pop()
 	red, green, blue = location_specific_temp_spread(int(temp), 45, 85) #imputing temp, min temp range, max temp range
 	change_colors(last_RGB_values[0], last_RGB_values[1], last_RGB_values[2], red, green, blue , args) #function call to change colors
-	sleep(10) #function call to do 10 iterations (=10 minutes currently)
+	sleep(1) #function call to do 10 iterations (=10 minutes currently)
 
 def upside_down(precipitation):
 	""" If JSON returns rainy/snowy forcast, this function returns True. 
@@ -194,7 +209,6 @@ def change_colors(old_red, old_green, old_blue, new_red, new_green, new_blue, ar
 		if old_green != new_green:
 			old_green = color_value_changer(old_green, new_green)
 
-
 		if old_blue != new_blue:
 			old_blue = color_value_changer(old_blue, new_blue)
 
@@ -208,4 +222,10 @@ def change_colors(old_red, old_green, old_blue, new_red, new_green, new_blue, ar
 
 zip_code_input = get_zip_code()
 while True:
-	check_weather()
+	try:
+		check_weather()
+	except requests.exceptions.ConnectionError as e:
+		print("CONNECTION WAS LOST!", e)
+		sleep(2)
+
+
